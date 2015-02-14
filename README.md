@@ -12,9 +12,10 @@ build
 
 `make` -- depends on gcc-arm-none
 
-The bootloader must be unlocked (instructions at [spark/bootloader](https://github.com/spark/bootloader)) before running the following:
-
+The bootloader must be unlocked (instructions at [spark/bootloader](https://github.com/spark/bootloader)) and [stlink](https://github.com/texane/stlink) before running the following:
 `st-flash erase && st-flash write spark-metal.bin 0x08000000` 
+
+[stlink](https://github.com/texane/stlink)
 
 plans
 -----
