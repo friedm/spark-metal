@@ -8,6 +8,7 @@
 extern crate core;
 
 pub mod runtime;
+pub mod periph;
 
 extern {
     fn c_main() -> ();
@@ -15,6 +16,7 @@ extern {
 
 #[no_mangle]
 pub fn main() {
+    periph::enable();
     unsafe {
         c_main();
     }

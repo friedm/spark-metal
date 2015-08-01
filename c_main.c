@@ -22,8 +22,8 @@ void enablePeriph(void) {
 }
 
 void c_main(void) {
-   systemInit();
-   enablePeriph();
+//   systemInit();
+//   enablePeriph();
 
    GPIOInit(GPIOA, LED_RED|LED_BLUE|LED_GREEN, 0x10, 3);
    GPIOA->BSRR = 0xFFFF;

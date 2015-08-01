@@ -23,5 +23,3 @@ typedef struct {
 #define FLASH_ACR_PRFTBE ((uint)0x10)
 #define FLASH_ACR_LATENCY ((uint)0x03)
 #define FLASH_ACR_LATENCY_2 ((uint)0x02)
-
-void clkInit(void);

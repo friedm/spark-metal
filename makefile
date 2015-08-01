@@ -21,7 +21,7 @@ c_main.o gpio.o util.o rcc.o led.o button.o: c_main.c gpio.c rcc.c util.c led.c 
 startup.o: startup.S
 	arm-none-eabi-as -mcpu=cortex-m3 -g startup.S -o startup.o
 
-%.o: %.rs
+%.o: %.rs $(wildcard *.rs)
 	$(RUSTC) $(RUSTFLAGS) -o ${@} ${<}
 
 clean:
