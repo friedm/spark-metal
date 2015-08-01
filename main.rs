@@ -9,7 +9,13 @@ extern crate core;
 
 pub mod runtime;
 
+extern {
+    fn c_main() -> ();
+}
+
 #[no_mangle]
 pub fn main() {
-    loop { }
+    unsafe {
+        c_main();
+    }
 }

@@ -21,7 +21,7 @@ void enablePeriph(void) {
    RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 }
 
-void main(void) {
+void c_main(void) {
    systemInit();
    enablePeriph();
 
