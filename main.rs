@@ -8,6 +8,7 @@
 extern crate core;
 
 pub mod runtime;
+pub mod rawstruct;
 pub mod periph;
 
 extern {

@@ -1,6 +1,5 @@
-use core::mem;
-use core::ptr;
 use core::clone::Clone;
+use rawstruct::RawStruct;
 
 const PERIPH_BASE: usize = 0x40000000;
 const AHB_PERIPH_BASE: usize = PERIPH_BASE + 0x20000;
@@ -16,7 +15,7 @@ const FLASH_ACR_LATENCY: usize = 0x03;
 const FLASH_ACR_LATENCY_2: usize = 0x02;
 
 #[derive(Clone)]
-pub struct RCC {
+struct RCC {
     CR: usize,
     CFGR: usize,
     CIR: usize,
@@ -29,33 +28,20 @@ pub struct RCC {
     CSR: usize
 }
 
-fn read_rcc() -> RCC {
-    let mut ptr = RCC_BASE as *mut RCC;
-    unsafe {
-        mem::transmute((*ptr).clone())
+impl RawStruct<RCC> for RCC {
+    fn mem_base() -> *mut RCC {
+        RCC_BASE as *mut RCC
     }
-}
 
-fn write_rcc(to_write: RCC) {
-    let mut ptr = RCC_BASE as *mut RCC;
-    unsafe {
-        ptr::write(ptr, to_write.clone());
+    fn to_struct(&self) -> RCC {
+        (*self).clone()
     }
 }
 
 pub fn enable() {
-    /*let mut rcc = read_rcc();
+    let mut rcc = RCC::from_mem();
     rcc.APB2ENR |= RCC_APB2ENR_IOAEN;
     rcc.APB2ENR |= RCC_APB2ENR_IOBEN;
     rcc.APB2ENR |= RCC_APB2ENR_AFIOEN;
-    write_rcc(rcc);
-    */
-
-    unsafe {
-        let mut ptr = RCC_BASE as *mut usize;
-        let mut apb2enr = ptr.offset(6);
-        ptr::write(apb2enr,*apb2enr | RCC_APB2ENR_IOAEN);
-        ptr::write(apb2enr, *apb2enr | RCC_APB2ENR_IOBEN);
-        ptr::write(apb2enr, *apb2enr | RCC_APB2ENR_AFIOEN);
-    }
+    rcc.write();
 }
