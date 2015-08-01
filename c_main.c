@@ -25,10 +25,10 @@ void c_main(void) {
 //   systemInit();
 //   enablePeriph();
 
-   GPIOInit(GPIOA, LED_RED|LED_BLUE|LED_GREEN, 0x10, 3);
-   GPIOA->BSRR = 0xFFFF;
+   //GPIOInit(GPIOA, LED_RED|LED_BLUE|LED_GREEN, 0x10, 3);
+//   GPIOA->BSRR = 0xFFFF;
 
-   GPIOInit(GPIOB, (uint)BUTTON_PIN, GPIO_MODE_IPU, 2);
+   //GPIOInit(GPIOB, (uint)BUTTON_PIN, GPIO_MODE_IPU, 2);
 
    seed(11110);
 

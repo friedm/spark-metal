@@ -1,7 +1,7 @@
 use core::clone::Clone;
 use rawstruct::RawStruct;
 
-const PERIPH_BASE: usize = 0x40000000;
+pub const PERIPH_BASE: usize = 0x40000000;
 const AHB_PERIPH_BASE: usize = PERIPH_BASE + 0x20000;
 
 const RCC_APB2ENR_AFIOEN: usize = 0x00000001;
@@ -29,19 +29,15 @@ struct RCC {
 }
 
 impl RawStruct<RCC> for RCC {
-    fn mem_base() -> *mut RCC {
-        RCC_BASE as *mut RCC
-    }
-
     fn to_struct(&self) -> RCC {
         (*self).clone()
     }
 }
 
 pub fn enable() {
-    let mut rcc = RCC::from_mem();
+    let mut rcc = RCC::from_mem(RCC_BASE);
     rcc.APB2ENR |= RCC_APB2ENR_IOAEN;
     rcc.APB2ENR |= RCC_APB2ENR_IOBEN;
     rcc.APB2ENR |= RCC_APB2ENR_AFIOEN;
-    rcc.write();
+    rcc.write(RCC_BASE);
 }

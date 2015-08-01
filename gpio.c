@@ -56,6 +56,8 @@ void GPIOInit(GPIO_TypeDef * GPIOx, uint pin, uint mode, uint speed) {
       }
       GPIOx->CRH = tmpreg;
    }
+
+   GPIOx->BSRR = 0xFFFF;
 }
 
 void gpioWrite(GPIO_TypeDef *gpio, uint pin, uint val) {
