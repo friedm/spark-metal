@@ -15,4 +15,7 @@ startup.o: startup.S
 	arm-none-eabi-as -mcpu=cortex-m3 -g startup.S -o startup.o
 
 clean:
-	rm -rf *.o spark-metal.elf 
+	rm -rf *.o spark-metal.elf spark-metal.bin
+
+load: spark-metal.bin
+	st-flash erase && st-flash write spark-metal.bin 0x08000000
