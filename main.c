@@ -5,7 +5,7 @@
 #include <button.h>
 
 //called by startup.S before main
-void SystemInit(void) {
+void systemInit(void) {
    RCC->CR |= (uint)0x00000001;
    RCC->CFGR &= (uint)0xF8FF0000;
    RCC->CR &= (uint)0xFEF6FFFF;
@@ -22,6 +22,7 @@ void enablePeriph(void) {
 }
 
 void main(void) {
+   systemInit();
    enablePeriph();
 
    GPIOInit(GPIOA, LED_RED|LED_BLUE|LED_GREEN, 0x10, 3);

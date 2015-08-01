@@ -8,13 +8,19 @@ Implemented by scouring
 and [spark/firmware](https://github.com/spark/firmware) for memory ranges associated with the core's gpio and their usages.
 [antoinealb/rust-demo-cortex-m4](https://github.com/antoinealb/rust-demo-cortex-m4) has also been a helpful rust reference.
 
+dependencies
+----
+
+* hardware: spark core, jtag shield, st-link 2
+* gcc-arm-none binutils
+* [stlink](https://github.com/texane/stlink)
+* an unlocked spark bootloader (instructions at [spark/bootloader](https://github.com/spark/bootloader))
+
 build
 -----
 
-`make` -- depends on gcc-arm-none
-
-The bootloader must be unlocked (instructions at [spark/bootloader](https://github.com/spark/bootloader)) and [stlink](https://github.com/texane/stlink) installed before running the following:  
-`st-flash erase && st-flash write spark-metal.bin 0x08000000`
+* `make` -- build flashable spark-metal.bin
+* `make load` -- build and automatically flash over stlink-2
 
 plans
 -----
@@ -22,8 +28,3 @@ plans
 * port to rust  
 * uart driver
 * driver for the core's CC3000 wifi module
-
-uart memory location
-----
-0x40005C00
-0x40006000
