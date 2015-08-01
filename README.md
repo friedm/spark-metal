@@ -2,10 +2,11 @@ spark-metal
 ===========
 
 A dabbling in driver development that will display a randomly colored light with each button press on the core.
-No libraries are referenced, but a some pieces of spark's firmware are included.
+Some pieces of spark's firmware have been included.
 Implemented by scouring
 [spark/bootloader](https://github.com/spark/bootloader)
 and [spark/firmware](https://github.com/spark/firmware) for memory ranges associated with the core's gpio and their usages.
+[antoinealb/rust-demo-cortex-m4](https://github.com/antoinealb/rust-demo-cortex-m4) has also been a helpful rust reference.
 
 build
 -----
@@ -18,6 +19,7 @@ The bootloader must be unlocked (instructions at [spark/bootloader](https://gith
 plans
 -----
 
+* port to rust  
 * uart driver
 * driver for the core's CC3000 wifi module
 
