@@ -32,6 +32,7 @@ struct GPIO {
    LCKR: usize
 }
 
+#[derive(Clone)]
 pub struct Gpio {
     mem_base: usize,
     gpio: GPIO
@@ -67,7 +68,7 @@ impl Gpio {
         if pin & 0x00FF != 0x00 {
             tmpreg = self.gpio.CRL;
 
-            for pinpos in 0x00..0x07 {
+            for pinpos in 0x00..0x08 {
                 pos = 0x01 << pinpos;
 
                 currentpin = pin & pos;
@@ -90,7 +91,7 @@ impl Gpio {
 
         if pin > 0x00FF {
             tmpreg = self.gpio.CRH;
-            for pinpos in 0x00..0x07 {
+            for pinpos in 0x00..0x08 {
                 pos = 0x01 << (pinpos + 0x08);
 
                 currentpin = pin & pos;
@@ -116,11 +117,19 @@ impl Gpio {
 
     pub fn set(&mut self, pin: usize, val: bool) {
         self.gpio = Self::from_mem(self.mem_base);
+        super::util::block(0);
         self.gpio.BSRR = if val {
             pin << 16
         } else {
             pin
         };
         self.write(self.mem_base);
+        super::util::block(0);
+    }
+
+    pub fn is_set(&mut self, pin: usize) -> bool {
+        self.gpio = Self::from_mem(self.mem_base);
+        super::util::block(0);
+        (self.gpio.IDR & pin) != 0
     }
 }

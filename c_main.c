@@ -32,7 +32,7 @@ void c_main(void) {
 
    seed(11110);
 
-   writeLED(LED_WHITE);
+//   writeLED(LED_WHITE);
    while (1) {
       uint d = rand() % 6;
 
