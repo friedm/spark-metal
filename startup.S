@@ -38,13 +38,11 @@ Reset_Handler:
 //FillZerobss:
 //   movs  r3, #0
 //   str   r3, [r2], #4
-//   
+//
 //LoopFillZerobss:
 //   ldr   r3, =_ebss
 //   cmp   r2, r3
 //   bcc   FillZerobss
-
-   bl SystemInit
 
    bl main
    //bx lr
@@ -63,7 +61,7 @@ Infinite_Loop:
 .size g_pfnVectors, .-g_pfnVectors
 
 g_pfnVectors:
-   .word _estack 
+   .word _estack
    .word Reset_Handler
    .word NMI_Handler
    .word HardFault_Handler
@@ -133,13 +131,13 @@ g_pfnVectors:
 
   .weak	NMI_Handler
 	.thumb_set NMI_Handler,Default_Handler
-	
+
   .weak	HardFault_Handler
 	.thumb_set HardFault_Handler,Default_Handler
-	
+
   .weak	MemManage_Handler
 	.thumb_set MemManage_Handler,Default_Handler
-	
+
   .weak	BusFault_Handler
 	.thumb_set BusFault_Handler,Default_Handler
 
