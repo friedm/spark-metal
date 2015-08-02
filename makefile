@@ -12,8 +12,8 @@ all: spark-metal.bin
 spark-metal.bin: spark-metal.elf
 	arm-none-eabi-objcopy -S -O binary spark-metal.elf spark-metal.bin
 
-spark-metal.elf: spark-metal.ld startup.o $(RUSTOBJS)
-	arm-none-eabi-ld -T spark-metal.ld -I$(SELF_DIR)include startup.o $(RUSTOBJS) -o spark-metal.elf
+spark-metal.elf: cortex-m3.ld startup.o $(RUSTOBJS)
+	arm-none-eabi-ld -T cortex-m3.ld -I$(SELF_DIR)include startup.o $(RUSTOBJS) -o spark-metal.elf
 
 startup.o: startup.S
 	arm-none-eabi-as -mcpu=cortex-m3 -g startup.S -o startup.o
