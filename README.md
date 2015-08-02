@@ -27,4 +27,5 @@ plans
 -----
 
 * uart driver
+* malloc
 * driver for the core's CC3000 wifi module
