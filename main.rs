@@ -1,6 +1,7 @@
 #![feature(no_std)]
 #![feature(core)]
 #![feature(lang_items)]
+#![feature(core_str_ext)]
 #![no_std]
 
 #![crate_type="staticlib"]
@@ -14,6 +15,8 @@ mod periph;
 mod gpio;
 mod led;
 mod button;
+mod uart;
+mod usb;
 
 mod util;
 
@@ -37,6 +40,7 @@ pub fn main() {
     loop {
         let n = (&mut rand).next() as usize;
         if !gpio_b.is_set(BUTTON_PIN) {
+
             match n%6 {
                 0 => led.set(LED_RED),
                 1 => led.set(LED_GREEN),
