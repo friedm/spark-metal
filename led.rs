@@ -1,7 +1,6 @@
 use core::clone::Clone;
 
 use gpio::Gpio;
-use rawstruct::RawStruct;
 
 pub const LED_BLUE: usize = 0x0100;
 pub const LED_GREEN: usize = 0x0400;

@@ -10,22 +10,18 @@ const RCC_APB2ENR_IOBEN: usize = 0x0000008;
 
 const RCC_BASE: usize = AHB_PERIPH_BASE + 0x1000;
 
-const FLASH_ACR_PRFTBE: usize = 0x10;
-const FLASH_ACR_LATENCY: usize = 0x03;
-const FLASH_ACR_LATENCY_2: usize = 0x02;
-
 #[derive(Clone)]
 struct RCC {
-    CR: usize,
-    CFGR: usize,
-    CIR: usize,
-    APB2RSTR: usize,
-    APB1RSTR: usize,
-    AHBENR: usize,
-    APB2ENR: usize,
-    APB1ENR: usize,
-    BDCR: usize,
-    CSR: usize
+    cr: usize,
+    cfgr: usize,
+    cir: usize,
+    apb2rstr: usize,
+    apb1rstr: usize,
+    ahbenr: usize,
+    apb2enr: usize,
+    apb1enr: usize,
+    bdcr: usize,
+    csr: usize
 }
 
 impl RawStruct<RCC> for RCC {
@@ -36,8 +32,8 @@ impl RawStruct<RCC> for RCC {
 
 pub fn enable() {
     let mut rcc = RCC::from_mem(RCC_BASE);
-    rcc.APB2ENR |= RCC_APB2ENR_IOAEN;
-    rcc.APB2ENR |= RCC_APB2ENR_IOBEN;
-    rcc.APB2ENR |= RCC_APB2ENR_AFIOEN;
+    rcc.apb2enr |= RCC_APB2ENR_IOAEN;
+    rcc.apb2enr |= RCC_APB2ENR_IOBEN;
+    rcc.apb2enr |= RCC_APB2ENR_AFIOEN;
     rcc.write(RCC_BASE);
 }

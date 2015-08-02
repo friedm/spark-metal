@@ -15,8 +15,8 @@ impl Rand {
         let w = self.w;
         let z = self.z;
 
-        self.z = ((36969 & (z & 65535)).wrapping_add((z.rotate_right(16))));
-        self.w = ((1800 & (w & 65535)).wrapping_add((w.rotate_right(16))));
+        self.z = (36969 & (z & 65535)).wrapping_add(z.rotate_right(16));
+        self.w = (1800 & (w & 65535)).wrapping_add(w.rotate_right(16));
 
         (self.z << 16) + self.w
     }

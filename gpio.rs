@@ -6,30 +6,19 @@ use rawstruct::RawStruct;
 const APB2PERIPH_BASE: usize = PERIPH_BASE + 0x10000;
 pub const GPIOA: usize = APB2PERIPH_BASE + 0x0800;
 pub const GPIOB: usize = APB2PERIPH_BASE + 0x0C00;
-const GPIOC: usize = APB2PERIPH_BASE + 0x1000;
-const GPIOD: usize = APB2PERIPH_BASE + 0x1400;
-const GPIOE: usize = APB2PERIPH_BASE + 0x1800;
-const GPIOF: usize = APB2PERIPH_BASE + 0x1C00;
-const GPIOG: usize = APB2PERIPH_BASE + 0x2000;
 
 const GPIO_MODE_IPD: usize = 0x28;
 pub const GPIO_MODE_IPU: usize = 0x48;
-const GPIO_MODE_IN_FLOATING: usize = 0x04;
-const GPIO_MODE_AIN: usize = 0x0;
-const GPIO_MODE_OUT_OD: usize = 0x14;
-const GPIO_MODE_OUT_PP: usize = 0x10;
-const GPIO_MODE_AF_OD: usize = 0x1C;
-const GPIO_MODE_AF_PP: usize = 0x18;
 
 #[derive(Clone)]
 struct GPIO {
-   CRL: usize,
-   CRH: usize,
-   IDR: usize,
-   ODR: usize,
-   BSRR: usize,
-   BRR: usize,
-   LCKR: usize
+   crl: usize,
+   crh: usize,
+   idr: usize,
+   odr: usize,
+   bsrr: usize,
+   brr: usize,
+   lckr: usize
 }
 
 #[derive(Clone)]
@@ -53,10 +42,6 @@ impl Gpio {
     }
 
     pub fn init_pin(&mut self, pin: usize, mode: usize, speed: usize) {
-        let mut tmpreg = 0;
-        let mut pos = 0;
-        let mut currentpin = 0;
-        let mut pinmask = 0;
         let mut currentmode = mode & 0x0F;
 
         if mode & 0x10 != 0x00 {
@@ -66,58 +51,58 @@ impl Gpio {
         self.gpio = Self::from_mem(self.mem_base);
 
         if pin & 0x00FF != 0x00 {
-            tmpreg = self.gpio.CRL;
+            let mut tmpreg = self.gpio.crl;
 
             for pinpos in 0x00..0x08 {
-                pos = 0x01 << pinpos;
+                let mut pos = 0x01 << pinpos;
 
-                currentpin = pin & pos;
+                let currentpin = pin & pos;
                 if currentpin == pos {
                     pos = pinpos << 2;
 
-                    pinmask = 0x0F << pos;
+                    let pinmask = 0x0F << pos;
                     tmpreg &= pinmask^(0xFFFFFFFF);
                     tmpreg |= currentmode << pos;
 
                     match mode {
-                        GPIO_MODE_IPD => { self.gpio.BRR = 0x01 << pinpos; },
-                        GPIO_MODE_IPU => { self.gpio.BSRR = 0x01 << pinpos; },
+                        GPIO_MODE_IPD => { self.gpio.brr = 0x01 << pinpos; },
+                        GPIO_MODE_IPU => { self.gpio.bsrr = 0x01 << pinpos; },
                         _ => {}
                     }
                 }
             }
-            self.gpio.CRL = tmpreg;
+            self.gpio.crl = tmpreg;
         }
 
         if pin > 0x00FF {
-            tmpreg = self.gpio.CRH;
+            let mut tmpreg = self.gpio.crh;
             for pinpos in 0x00..0x08 {
-                pos = 0x01 << (pinpos + 0x08);
+                let mut pos = 0x01 << (pinpos + 0x08);
 
-                currentpin = pin & pos;
+                let currentpin = pin & pos;
                 if currentpin == pos {
                     pos = pinpos << 2;
 
-                    pinmask = 0x0F << pos;
+                    let pinmask = 0x0F << pos;
                     tmpreg &= pinmask^(0xFFFFFFFF);
                     tmpreg |= currentmode << pos;
 
                     match mode {
-                        GPIO_MODE_IPD => { self.gpio.BRR = 0x01 << (pinpos + 0x08)},
-                        GPIO_MODE_IPU => { self.gpio.BSRR = 0x01 << (pinpos + 0x08)},
+                        GPIO_MODE_IPD => { self.gpio.brr = 0x01 << (pinpos + 0x08)},
+                        GPIO_MODE_IPU => { self.gpio.bsrr = 0x01 << (pinpos + 0x08)},
                         _ => {}
                     }
                 }
             }
-            self.gpio.CRH = tmpreg;
+            self.gpio.crh = tmpreg;
         }
-        self.gpio.BSRR = 0xFFFF;
+        self.gpio.bsrr = 0xFFFF;
         self.write(self.mem_base);
     }
 
     pub fn set(&mut self, pin: usize, val: bool) {
         self.gpio = Self::from_mem(self.mem_base);
-        self.gpio.BSRR = if val {
+        self.gpio.bsrr = if val {
             pin << 16
         } else {
             pin
@@ -127,6 +112,6 @@ impl Gpio {
 
     pub fn is_set(&mut self, pin: usize) -> bool {
         self.gpio = Self::from_mem(self.mem_base);
-        (self.gpio.IDR & pin) != 0
+        (self.gpio.idr & pin) != 0
     }
 }
