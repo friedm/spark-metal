@@ -12,11 +12,8 @@ all: spark-metal.bin
 spark-metal.bin: spark-metal.elf
 	arm-none-eabi-objcopy -S -O binary spark-metal.elf spark-metal.bin
 
-spark-metal.elf: c_main.o gpio.o rcc.o util.o startup.o led.o button.o spark-metal.ld $(RUSTOBJS)
-	arm-none-eabi-ld -T spark-metal.ld -I$(SELF_DIR)include startup.o c_main.o gpio.o rcc.o util.o led.o button.o $(RUSTOBJS) -o spark-metal.elf
-
-c_main.o gpio.o util.o rcc.o led.o button.o: c_main.c gpio.c rcc.c util.c led.c button.c
-	arm-none-eabi-gcc -c -mcpu=cortex-m3 -I$(SELF_DIR)include -g c_main.c gpio.c rcc.c util.c led.c button.c -mthumb
+spark-metal.elf: spark-metal.ld startup.o $(RUSTOBJS)
+	arm-none-eabi-ld -T spark-metal.ld -I$(SELF_DIR)include startup.o $(RUSTOBJS) -o spark-metal.elf
 
 startup.o: startup.S
 	arm-none-eabi-as -mcpu=cortex-m3 -g startup.S -o startup.o
