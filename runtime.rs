@@ -1,10 +1,3 @@
-#![feature(no_std)]
-#![feature(core)]
-
-#![no_std]
-#![crate_type="staticlib"]
-#![feature(lang_items)]
-
 extern crate core;
 
 #[lang="stack_exhausted"] extern fn stack_exhausted() {}
@@ -16,5 +9,10 @@ pub fn panic_fmt(_fmt: &core::fmt::Arguments, _file_line: &(&'static str, usize)
 
 #[no_mangle]
 pub unsafe fn __aeabi_unwind_cpp_pr0() -> () {
+    loop { }
+}
+
+#[no_mangle]
+pub unsafe fn __aeabi_unwind_cpp_pr1() -> () {
     loop { }
 }

@@ -23,9 +23,11 @@ impl Rand {
 }
 
 extern {
-    fn delay(cycles:usize) -> ();
+    pub fn do_nothing() -> ();
 }
 
-pub fn block(cycles: usize) {
-    unsafe { delay(cycles); }
+pub fn delay(cycles: usize) {
+    for _ in 0..cycles {
+        unsafe { do_nothing(); }
+    }
 }

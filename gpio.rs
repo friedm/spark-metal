@@ -117,19 +117,16 @@ impl Gpio {
 
     pub fn set(&mut self, pin: usize, val: bool) {
         self.gpio = Self::from_mem(self.mem_base);
-        super::util::block(0);
         self.gpio.BSRR = if val {
             pin << 16
         } else {
             pin
         };
         self.write(self.mem_base);
-        super::util::block(0);
     }
 
     pub fn is_set(&mut self, pin: usize) -> bool {
         self.gpio = Self::from_mem(self.mem_base);
-        super::util::block(0);
         (self.gpio.IDR & pin) != 0
     }
 }

@@ -49,6 +49,6 @@ pub fn main() {
             while !gpio_b.is_set(BUTTON_PIN) {}
         }
 
-        util::block(5000);
+        util::delay(5000);
     }
 }
