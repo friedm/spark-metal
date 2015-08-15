@@ -5,8 +5,6 @@
 
 #![crate_type="staticlib"]
 
-extern crate core;
-
 pub mod runtime;
 
 mod rawstruct;

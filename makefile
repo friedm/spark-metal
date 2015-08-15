@@ -21,8 +21,12 @@ startup.o: startup.S
 %.o: %.rs $(wildcard *.rs)
 	$(RUSTC) $(RUSTFLAGS) -o ${@} ${<}
 
+libcore: clean
+	mkdir libcore-thumbv7m
+	$(RUSTC) -C opt-level=2 -Z no-landing-pads --target thumbv7em-none-eabi -g ../rust/src/libcore/lib.rs --out-dir=libcore-thumbv7m
+
 clean:
-	rm -rf *.o spark-metal.elf spark-metal.bin
+	rm -rf *.o spark-metal.elf spark-metal.bin libcore-thumbv7m
 
 load: spark-metal.bin
 	st-flash erase && st-flash write spark-metal.bin 0x08000000

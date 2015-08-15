@@ -14,11 +14,17 @@ dependencies
 
 * hardware: spark core, jtag shield, st-link 2
 * gcc-arm-none binutils
+* nightly rust
 * [stlink](https://github.com/texane/stlink)
 * an unlocked spark bootloader (instructions at [spark/bootloader](https://github.com/spark/bootloader))
 
 build
 -----
+
+* `git clone https://github.com/rust-lang/rust`
+* `git clone https://github.com/friedm/spark-metal`
+* `cd rust && git checkout $(rustc --version | sed 's/.*(//g' | head -c9)` -- get the source for your version of rustc
+* `cd ../spark-metal && make libcore` -- cross-compile libcore for your version of rustc  
 
 * `make` -- build flashable spark-metal.bin
 * `make load` -- build and automatically flash over stlink-2
