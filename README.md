@@ -25,7 +25,6 @@ build
 * `git clone https://github.com/friedm/spark-metal`
 * `cd rust && git checkout $(rustc --version | sed 's/.*(//g' | head -c9)` -- get the source for your version of rustc
 * `cd ../spark-metal && make libcore` -- cross-compile libcore for your version of rustc  
-
 * `make` -- build flashable spark-metal.bin
 * `make load` -- build and automatically flash over stlink-2
 
