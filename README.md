@@ -1,13 +1,12 @@
 spark-metal
 ===========
 
-An embedded ARM experiment with GPIO in Rust/C. Displays a randomly colored light with each button press on the core.
-Some pieces of spark's firmware have been included.
-Implemented by referencing spark GPIO in
-[spark/bootloader](https://github.com/spark/bootloader)
-and [spark/firmware](https://github.com/spark/firmware).
+An embedded ARM experiment with GPIO in Rust/C. Displays a randomly colored light with 
+each button press on the core. Some pieces of spark's firmware have been included.
 
-Thanks to [antoinealb/rust-demo-cortex-m4](https://github.com/antoinealb/rust-demo-cortex-m4) for the helpful rust reference.
+Thanks to [spark/bootloader](https://github.com/spark/bootloader) and [spark/firmware](https://github.com/spark/firmware) for the spark reference, as well as
+[antoinealb/rust-demo-cortex-m4](https://github.com/antoinealb/rust-demo-cortex-m4)
+for documenting the rust cross-compile process\.
 
 dependencies
 ----
