@@ -1,3 +1,5 @@
 *.o
 *.elf
 *.bin
+libcore-thumbv7m
+*.swp
