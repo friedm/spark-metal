@@ -10,6 +10,7 @@ pub mod runtime;
 mod rawstruct;
 mod periph;
 mod gpio;
+mod usb;
 mod led;
 mod button;
 
@@ -21,8 +22,17 @@ use button::*;
 
 #[no_mangle]
 pub fn main() {
-    periph::enable();
+    periph::enable_apb1();
+    periph::enable_ahb();
+    periph::enable_apb2();
 
+    usb::init();
+
+    rand_color_loop();
+}
+
+///display a new random color with every button press
+fn rand_color_loop() -> ! {
     let mut led = Led::new(&mut Gpio::from(GPIOA));
 
     let mut gpio_b = Gpio::from(GPIOB);
