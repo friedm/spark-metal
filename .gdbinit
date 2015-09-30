@@ -1,4 +1,4 @@
-target extended-remote :4242
+target extended-remote :3333
 file spark-metal.elf
-break WWDG_IRQHandler
+break rust_panic
 load
